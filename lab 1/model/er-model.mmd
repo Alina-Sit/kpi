@@ -1,0 +1,76 @@
+erDiagram
+    Publisher ||--o{ Book : publishes
+    Genre ||--o{ Book : classifies
+    Author }|--|{ Book : writes
+    Book ||--o{ BookCopy : has_copy
+    Book ||--o{ DigitalEdition : has_edition
+    BookCopy ||--o{ Loan : lent_in
+    Reader ||--o{ Loan : makes
+    Reader ||--o{ ReadingSession : starts
+    DigitalEdition ||--o{ ReadingSession : read_in
+
+    Author {
+        number author_id PK
+        string full_name
+        number birth_year
+    }
+
+    Publisher {
+        number publisher_id PK
+        string name
+        string city
+    }
+
+    Genre {
+        number genre_id PK
+        string name
+    }
+
+    Book {
+        number book_id PK
+        string title
+        string isbn UK
+        number publication_year
+        number publisher_id FK
+        number genre_id FK
+    }
+
+    BookCopy {
+        number copy_id PK
+        string inventory_number
+        number book_id FK
+    }
+
+    DigitalEdition {
+        number digital_edition_id PK
+        number book_id FK
+        string file_format
+        string file_url
+    }
+
+    Reader {
+        number reader_id PK
+        string full_name
+        string email UK
+        date registration_date
+    }
+
+    Loan {
+        number loan_id PK
+        number copy_id FK
+        number reader_id FK
+        date loan_date
+        date due_date
+        date return_date "optional"
+        string status
+        string delivery_address
+    }
+
+    ReadingSession {
+        number session_id PK
+        number reader_id FK
+        number digital_edition_id FK
+        datetime started_at
+        number last_page
+        datetime finished_at "optional"
+    }
