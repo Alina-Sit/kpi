@@ -44,13 +44,13 @@
 - registration_date: date
 
 ### Loan
-Замовлення фізичного примірника.
+Замовлення фізичного примірника з доставкою. Одне замовлення стосується одного примірника.
 - loan_id: PK, number
 - copy_id: FK до BookCopy, number
 - reader_id: FK до Reader, number
-- loan_date: date
-- due_date: date
-- return_date: date, необов'язкове поле
+- loan_date: date, дата оформлення замовлення
+- due_date: date, дата, до якої треба повернути примірник
+- return_date: date, необов'язкове поле, дата фактичного повернення
 - status: string
 - delivery_address: string
 
@@ -87,5 +87,6 @@ Loan і ReadingSession є асоціативними сутностями, бо 
 6. Діаграма не містить SQL-типів і фізичної схеми БД.
 7. Фізичні та цифрові видання розділені на різні сутності, дані книги не дублюються в жодній із них.
 8. Кожен зв'язок у діаграмі має мітку, яка збігається з міткою у spec.
-9. Book.isbn і Reader.email унікальні.
-10. Loan.status приймає лише значення ordered, shipped, active, returned.
+9. Book.isbn і Reader.email унікальні, у діаграмі позначені UK.
+10. Loan.status має тип string, допустимі значення ordered, shipped, active, returned зафіксовано лише у spec, діаграма їх не виражає.
+11. Необов'язкові поля return_date і finished_at позначено в діаграмі коментарем «необов'язкове».
