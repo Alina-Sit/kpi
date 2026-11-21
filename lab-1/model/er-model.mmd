@@ -1,76 +1,133 @@
 erDiagram
-    Publisher ||--o{ Book : publishes
-    Genre ||--o{ Book : classifies
-    Author }|--|{ Book : writes
-    Book ||--o{ BookCopy : has_copy
-    Book ||--o{ DigitalEdition : has_edition
-    BookCopy ||--o{ Loan : lent_in
-    Reader ||--o{ Loan : makes
-    Reader ||--o{ ReadingSession : starts
-    DigitalEdition ||--o{ ReadingSession : read_in
+    User |o--o| Author : becomes
+    Author ||--o{ Book : writes
+    Author ||--o{ Collection : creates
+    Book ||--o{ Copy : has_copy
+    Book ||--o| DigitalVersion : has_digital
+    Library |o--o{ Copy : holds
+    Purchase |o--|{ Copy : contains
+    Library |o--o{ PickupPoint : hosts
+    User ||--o{ Reservation : reserves
+    Copy ||--o{ Reservation : reserved_in
+    Reservation ||--o| Fine : incurs
+    User ||--o{ Purchase : makes
+    Reservation |o--|| Delivery : delivered_by
+    Purchase |o--|| Delivery : delivered_by
+    PickupPoint ||--o{ Delivery : receives
+    Delivery ||--o{ Payment : paid_by
+    User ||--o{ ReaderGroup : owns
+    User ||--o{ ReadingProgress : tracks
+    Book ||--o{ ReadingProgress : tracked_in
+    Collection }o--o{ Book : contains
+    ReaderGroup }o--o{ Book : groups
+    User }o--o{ Collection : saves
+
+    User {
+        number id
+        string name
+        string email
+        datetime created_at
+    }
 
     Author {
-        number author_id PK
-        string full_name
-        number birth_year
-    }
-
-    Publisher {
-        number publisher_id PK
+        number id
         string name
-        string city
-    }
-
-    Genre {
-        number genre_id PK
-        string name
+        number user_id "optional"
     }
 
     Book {
-        number book_id PK
+        number id
         string title
-        string isbn UK
-        number publication_year
-        number publisher_id FK
-        number genre_id FK
+        number price
+        number author_id
     }
 
-    BookCopy {
-        number copy_id PK
-        string inventory_number
-        number book_id FK
+    Copy {
+        number id
+        number book_id
+        number library_id "optional"
+        number purchase_id "optional"
+        number sold_price "optional"
     }
 
-    DigitalEdition {
-        number digital_edition_id PK
-        number book_id FK
-        string file_format
+    DigitalVersion {
+        number id
+        number book_id
         string file_url
     }
 
-    Reader {
-        number reader_id PK
-        string full_name
-        string email UK
-        date registration_date
+    Collection {
+        number id
+        string title
+        number author_id
     }
 
-    Loan {
-        number loan_id PK
-        number copy_id FK
-        number reader_id FK
-        date loan_date
-        date due_date
-        date return_date "необов'язкове"
-        string status
-        string delivery_address
+    ReaderGroup {
+        number id
+        string title
+        number owner_id
+        boolean is_public
     }
 
-    ReadingSession {
-        number session_id PK
-        number reader_id FK
-        number digital_edition_id FK
-        datetime started_at
-        number last_page
-        datetime finished_at "необов'язкове"
+    Library {
+        number id
+        string name
+        string address
+    }
+
+    PickupPoint {
+        number id
+        string type
+        string address
+        number library_id "optional"
+    }
+
+    Reservation {
+        number id
+        number user_id
+        number copy_id
+        date start_date
+        date end_date
+        date returned_at "optional"
+    }
+
+    Purchase {
+        number id
+        number user_id
+        datetime created_at
+    }
+
+    Delivery {
+        number id
+        string type
+        number speed
+        number cost
+        datetime received_at "optional"
+        number pickup_point_id
+        number reservation_id "optional"
+        number purchase_id "optional"
+    }
+
+    Payment {
+        number id
+        number delivery_id
+        number amount
+        string kind
+        datetime paid_at
+    }
+
+    Fine {
+        number id
+        number reservation_id
+        number amount
+        boolean is_paid
+    }
+
+    ReadingProgress {
+        number id
+        number user_id
+        number book_id
+        boolean is_finished
+        number page
+        string word_marker
     }
