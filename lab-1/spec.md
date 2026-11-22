@@ -2,6 +2,14 @@
 
 Тип усіх id: number. Поля-зв'язки (author_id, library_id тощо) лишаються в атрибутах і в діаграмі мають називатися так само.
 
+Типи полів (крім id):
+- string: User.name, User.email, Author.name, Book.title, DigitalVersion.file_url, Collection.title, ReaderGroup.title, Library.name, Library.address, PickupPoint.type, PickupPoint.address, Delivery.type, Payment.kind, ReadingProgress.word_marker;
+- number: Book.price, Copy.sold_price, Delivery.speed, Delivery.cost, Payment.amount, Fine.amount, ReadingProgress.page;
+- boolean: ReaderGroup.is_public, Fine.is_paid, ReadingProgress.is_finished;
+- date: Reservation.start_date, Reservation.end_date, Reservation.returned_at;
+- datetime: User.created_at, Purchase.created_at, Delivery.received_at, Payment.paid_at.
+Усі поля `*_id` мають тип number, як і id.
+
 ## Сутності й атрибути
 
 - **User**: id, name, email, created_at. Особистий кабінет окремою сутністю не є, це відображення даних користувача.
