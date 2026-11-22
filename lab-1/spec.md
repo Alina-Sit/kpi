@@ -21,9 +21,9 @@
 - **ReaderGroup**: id, title, owner_id, is_public.
 - **Library**: id, name, address.
 - **PickupPoint**: id, type (library / shop / post), address, library_id (необов'язковий).
-- **Reservation**: id, user_id, copy_id, start_date, end_date, returned_at (порожнє, поки книгу не повернули).
+- **Reservation**: id, user_id, copy_id, start_date, end_date, returned_at (необов'язкове, порожнє, поки книгу не повернули).
 - **Purchase**: id, user_id, created_at.
-- **Delivery**: id, type, speed (днів), cost, received_at (порожнє, поки не отримано), pickup_point_id, reservation_id (необов'язковий), purchase_id (необов'язковий). Значення type: `slow` (30-60 днів), `express` (платна, 1-14 днів), `self_pickup` (самовивіз, вартість 0).
+- **Delivery**: id, type, speed (днів), cost, received_at (необов'язкове, порожнє, поки не отримано), pickup_point_id, reservation_id (необов'язковий), purchase_id (необов'язковий). Значення type: `slow` (30-60 днів), `express` (платна, 1-14 днів), `self_pickup` (самовивіз, вартість 0).
 - **Payment**: id, delivery_id, amount, kind (prepayment / surcharge), paid_at.
 - **Fine**: id, reservation_id, amount, is_paid.
 - **ReadingProgress**: id, user_id, book_id, is_finished, page, word_marker.
